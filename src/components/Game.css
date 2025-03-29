@@ -1,0 +1,293 @@
+.game-container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  animation: containerAppear 0.8s ease-out;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes containerAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  background: #2c3e50;
+  padding: 25px;
+  border-radius: 20px;
+  margin: 25px 0;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.3),
+              0 10px 30px rgba(0,0,0,0.2);
+  animation: boardAppear 0.8s ease-out 0.2s both;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes boardAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cell {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.2),
+              0 5px 15px rgba(0,0,0,0.1);
+  position: relative;
+  animation: cellAppear 0.5s ease-out;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  z-index: 3;
+}
+
+@keyframes cellAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cell:hover {
+  transform: scale(1.1) translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cell::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cell:hover::before {
+  opacity: 1;
+}
+
+.cell.red {
+  background: radial-gradient(circle at 30% 30%, #ff6b6b, #ff4444);
+  box-shadow: 0 0 30px rgba(255, 68, 68, 0.6);
+  animation: dropPiece 0.5s cubic-bezier(0.4, 0, 0.2, 1), pulseRed 2s infinite;
+}
+
+.cell.yellow {
+  background: radial-gradient(circle at 30% 30%, #ffd93d, #ffeb3b);
+  box-shadow: 0 0 30px rgba(255, 235, 59, 0.6);
+  animation: dropPiece 0.5s cubic-bezier(0.4, 0, 0.2, 1), pulseYellow 2s infinite;
+}
+
+@keyframes pulseRed {
+  0% { box-shadow: 0 0 30px rgba(255, 68, 68, 0.6); }
+  50% { box-shadow: 0 0 50px rgba(255, 68, 68, 0.9); }
+  100% { box-shadow: 0 0 30px rgba(255, 68, 68, 0.6); }
+}
+
+@keyframes pulseYellow {
+  0% { box-shadow: 0 0 30px rgba(255, 235, 59, 0.6); }
+  50% { box-shadow: 0 0 50px rgba(255, 235, 59, 0.9); }
+  100% { box-shadow: 0 0 30px rgba(255, 235, 59, 0.6); }
+}
+
+@keyframes dropPiece {
+  0% {
+    transform: translateY(-200px) rotateX(0deg) scale(1.2);
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(15px) rotateX(180deg) scale(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) rotateX(360deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.game-info {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: infoAppear 0.8s ease-out 0.1s both;
+  position: relative;
+  padding: 15px 25px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+@keyframes infoAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reset-button {
+  display: block;
+  margin: 30px auto;
+  padding: 15px 40px;
+  font-size: 20px;
+  background: linear-gradient(45deg, #2ecc71, #27ae60);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+  box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4);
+  animation: buttonAppear 0.8s ease-out 0.3s both;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes buttonAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reset-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reset-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: 0.6s;
+}
+
+.reset-button:hover::before {
+  left: 100%;
+}
+
+.game-title {
+  font-size: 48px;
+  background: linear-gradient(45deg, #3498db, #2c3e50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+  animation: titleAppear 0.8s ease-out;
+  position: relative;
+  display: inline-block;
+}
+
+@keyframes titleAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #3498db, transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.game-title:hover::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 600px) {
+  .game-container {
+    padding: 20px;
+  }
+  
+  .cell {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .game-info {
+    font-size: 28px;
+  }
+  
+  .game-title {
+    font-size: 36px;
+  }
+} 
